@@ -109,11 +109,14 @@ router.delete('/statements/:id', function(req, res, next) {
 });
 
 
-/// List of all statements, for a given actor
+/// List of all statements, for a given attribute !
 router.get('/statements', function(req, res, next) {
+
+// could be changed to fit the view in request0j parameters 
     var options =  {
-        key: 'Joseph' // need to be fixed
+        key: 'Joseph'
     };
+
     Statement.request('byActor', options, function(err, statements) {
         if(err) {
             /*

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 // Hello world!
-router.get('/clrs', function(req, res, next) {
+router.get('/cozyLRS', function(req, res, next) {
     res.status(200).send('Hello, We are building a nice Learning Record Store in your cozy world');
 });
 
