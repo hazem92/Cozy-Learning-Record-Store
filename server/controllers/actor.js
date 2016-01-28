@@ -108,7 +108,7 @@ router.delete('/actors/:id', function(req, res, next) {
 
 });
 
-
+/*
 /// List of all actor, for a given actor
 router.get('/actors', function(req, res, next) {
     var options =  {
@@ -116,20 +116,20 @@ router.get('/actors', function(req, res, next) {
     };
     Actor.request('byMbox', options, function(err, actors) {
         if(err) {
-            /*
-                If an unexpected error occurs, forward it to Express error
-                middleware which will send the error properly formatted.
-            */
+
+            //    If an unexpected error occurs, forward it to Express error
+            //    middleware which will send the error properly formatted.
+
             next(err);
         } else {
-            /*
-                If everything went well, send an empty response with the correct
-                HTTP status.
-            */
+            
+            //    If everything went well, send an empty response with the correct
+            //    HTTP status.
+
             res.status(200).json(actors);
         }
     });
-});
+});*/
 
 // Export the router instance to make it available from other files.
 module.exports = router;

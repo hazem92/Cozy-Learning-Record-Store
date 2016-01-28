@@ -108,7 +108,7 @@ router.delete('/verbs/:id', function(req, res, next) {
 
 });
 
-
+/*
 /// List of all verb, for a given verb
 router.get('/verbs', function(req, res, next) {
     var options =  {
@@ -116,20 +116,20 @@ router.get('/verbs', function(req, res, next) {
     };
     Verb.request('byID', options, function(err, verbs) {
         if(err) {
-            /*
-                If an unexpected error occurs, forward it to Express error
-                middleware which will send the error properly formatted.
-            */
+
+              //  If an unexpected error occurs, forward it to Express error
+              //  middleware which will send the error properly formatted.
+
             next(err);
         } else {
-            /*
-                If everything went well, send an empty response with the correct
-                HTTP status.
-            */
+
+              //  If everything went well, send an empty response with the correct
+              //  HTTP status.
+
             res.status(200).json(verbs);
         }
     });
-});
+}); */
 
 // Export the router instance to make it available from other files.
 module.exports = router;

@@ -12,5 +12,5 @@ var Actor = cozydb.getModel('Actor', {
 
 });
 
-// export module 
+// export module
 module.exports = Actor;

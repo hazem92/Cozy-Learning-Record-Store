@@ -4,8 +4,72 @@
         <meta charset="utf-8"><title>Cozy Learning Record Store</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
-	<body>
+    <body role="application">
+        <ul role="navigation">
+            <li aria-selected="true"><a href="#welcome"> Welcome </a></li>
+            <li aria-selected="false"><a href="#crud-fetch">Fetch an existing Statement</a></li>
+            <li aria-selected="false"><a href="#crud-delete">Delete an existing Statement</a></li>
+            <li aria-selected="false"><a href="#crud-list">List of Statements</a></li>
+        </ul>
+
+        <div role="main">
+
+          <div role="panel" id="welcome">
+              <h2>Welcome To Cozy Learning Record Store Application Interface <br>
+                Here you can find : a Statement by its ID delete it or list all Statements
+                in the LRS
+              </h2>
+              <p> How to use this application :
+              WIP</p>
+          </div>
 
 
-   </body>
+            <div role="panel" id="crud-fetch">
+                <h2>Fetch an existing Statement</h2>
+                <div>
+                    <h3>Fill the form with the Statement's ID you want to fetch:</h3>
+                    <label for="fetch-id">ID:
+                    <input type="text" id="fetch-id" /></label>
+                    <button>Submit request GET /statements/:id</button>
+                </div>
+                <div class="result">
+                    <h3>Request's response:</h3>
+                    <p class="status">Status code: <span></span></p>
+                    <pre class="body"></pre>
+                </div>
+            </div>
+
+
+            <div role="panel" id="crud-delete">
+                <h2>Delete an existing Statement</h2>
+                <div>
+                    <h3>Fill the form with the Statement's ID you want to delete:</h3>
+                    <label for="fetch-id">ID:
+                    <input type="text" id="delete-id" /></label>
+                    <button>Submit request DELETE /statements/:id</button>
+                </div>
+                <div class="result">
+                    <h3>Request's response:</h3>
+                    <p class="status">Status code: <span></span></p>
+                    <pre class="body"></pre>
+                </div>
+            </div>
+
+
+            <div role="panel" id="crud-list">
+                <h2>List all existing Statements </h2>
+                <div>
+                    <button>Submit request GET /statements/</button>
+                </div>
+                <div class="result">
+                    <h3>Request's response:</h3>
+                    <p class="status">Status code: <span></span></p>
+                    <pre class="body"></pre>
+                </div>
+            </div>
+        </div>
+
+                <script src="scripts/jquery.min.js"></script>
+                <script src="scripts/app.js"></script>
+    </body>
 </html>
