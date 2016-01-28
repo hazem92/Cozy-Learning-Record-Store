@@ -301,16 +301,16 @@ router.get('/statements', function(req, res, next) {
 
     Statement.request('byActor', options, function(err, statements) {
         if(err) {
-            /*
-                If an unexpected error occurs, forward it to Express error
-                middleware which will send the error properly formatted.
-            */
+            
+            //    If an unexpected error occurs, forward it to Express error
+            //   middleware which will send the error properly formatted.
+            
             next(err);
         } else {
-            /*
-                If everything went well, send an empty response with the correct
-                HTTP status.
-            */
+            
+            //    If everything went well, send an empty response with the correct
+            //    HTTP status.
+            
             res.status(200).json(statements);
         }
     });
