@@ -108,6 +108,81 @@ router.delete('/activities/:id', function(req, res, next) {
 
 });
 
+/// List of all Activities
+router.get('/activities', function(req, res, next) {
+
+    Activity.request('all', function(err, activities) {
+        if(err) {
+
+              //  If an unexpected error occurs, forward it to Express error
+              //  middleware which will send the error properly formatted.
+
+            next(err);
+        } else {
+
+              //  If everything went well, send an empty response with the correct
+              //  HTTP status.
+
+            res.status(200).json(activities);
+        }
+    });
+});
+
+/// Find Activities by type
+router.get('/activities/:type', function(req, res, next) {
+  var options =  {
+      key: req.params.type
+  };
+    Activity.request('byType', options, function(err, activities) {
+        if(err) {
+
+              //  If an unexpected error occurs, forward it to Express error
+              //  middleware which will send the error properly formatted.
+
+            next(err);
+        } else if (!activities) {
+    	    /*
+    	        If there was no unexpected error, but that the document has not
+    	        been found, send the legitimate status code. `activity` is null.
+    	    */
+        		res.sendStatus(404);
+    			} else {
+
+              //  If everything went well, send an empty response with the correct
+              //  HTTP status.
+
+            res.status(200).json(activities);
+        }
+    });
+});
+
+/// Find Activities by name
+router.get('/activities/:name', function(req, res, next) {
+  var options =  {
+      key: req.params.name
+  };
+    Activity.request('byName', options, function(err, activities) {
+        if(err) {
+
+              //  If an unexpected error occurs, forward it to Express error
+              //  middleware which will send the error properly formatted.
+
+            next(err);
+        } else if (!activities) {
+    	    /*
+    	        If there was no unexpected error, but that the document has not
+    	        been found, send the legitimate status code. `activity` is null.
+    	    */
+        		res.sendStatus(404);
+    			} else {
+
+              //  If everything went well, send an empty response with the correct
+              //  HTTP status.
+
+            res.status(200).json(activities);
+        }
+    });
+});
 
 
 /// List of all Activities, for a given actor !!! Not yet implemented !!!
