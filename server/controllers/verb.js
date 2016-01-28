@@ -108,13 +108,10 @@ router.delete('/verbs/:id', function(req, res, next) {
 
 });
 
-/*
-/// List of all verb, for a given verb
+/// List of all verb
 router.get('/verbs', function(req, res, next) {
-    var options =  {
-        key: 'Joseph' // need to be fixed
-    };
-    Verb.request('byID', options, function(err, verbs) {
+
+    Verb.request('all', function(err, verbs) {
         if(err) {
 
               //  If an unexpected error occurs, forward it to Express error
@@ -129,7 +126,35 @@ router.get('/verbs', function(req, res, next) {
             res.status(200).json(verbs);
         }
     });
-}); */
+});
+
+/// List of all verb
+router.get('/verbs/:display', function(req, res, next) {
+    var option = {
+      key: req.params.display
+    }
+    Verb.request('all', option, function(err, verbs) {
+        if(err) {
+
+              //  If an unexpected error occurs, forward it to Express error
+              //  middleware which will send the error properly formatted.
+
+            next(err);
+        } else if(!verbs){
+          /*
+              If there was no unexpected error, but that the document has not
+              been found, send the legitimate status code. `verb` is null.
+          */
+          res.sendStatus(404);
+        } else {
+
+              //  If everything went well, send an empty response with the correct
+              //  HTTP status.
+
+            res.status(200).json(verbs);
+        }
+    });
+});
 
 // Export the router instance to make it available from other files.
 module.exports = router;
