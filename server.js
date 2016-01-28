@@ -23,6 +23,15 @@ app.use(indexController);
 var statementController = require('./server/controllers/statement');
 app.use(statementController);
 
+var actorController = require('./server/controllers/actor');
+app.use(actorController);
+
+var activityController = require('./server/controllers/activity');
+app.use(activityController);
+
+var verbController = require('./server/controllers/verb');
+app.use(verbController);
+
 
 /*
     CouchDB views initialization. It must be done before starting the server.
