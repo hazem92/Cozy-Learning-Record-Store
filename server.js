@@ -9,9 +9,12 @@ var cozydb = require('cozydb');
 /*
     Configuration section.
 */
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static('client'));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 
 /*
