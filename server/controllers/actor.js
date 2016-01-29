@@ -24,6 +24,7 @@ router.post('/actors', function(req, res, next) {
 
 // Fetch an existing actor
 router.get('/actors/:id', function(req, res, next) {
+  console.log('' + req.params.id);
 	Actor.find(req.params.id, function(err, actor) {
 		if(err) {
 	   		next(err);
@@ -34,6 +35,7 @@ router.get('/actors/:id', function(req, res, next) {
 	    */
     		res.sendStatus(404);
 			} else {
+        console.log('--------------------------------------------------------');
 				res.status(200).send(actor);
 					}
 
@@ -108,6 +110,27 @@ router.delete('/actors/:id', function(req, res, next) {
 
 });
 
+// Remove all existing actors
+router.delete('/actors', function(req, res, next) {
+
+    Actor.requestDestroy('all', function(err) {
+        if(err) {
+            /*
+                If an unexpected error occurs, forward it to Express error
+                middleware which will send the error properly formatted.
+            */
+            next(err);
+        } else {
+            /*
+                If everything went well, send an empty response with the correct
+                HTTP status.
+            */
+            res.sendStatus(204);
+        }
+    });
+
+});
+
 
 /// List of all actors
 router.get('/actors', function(req, res, next) {
@@ -123,7 +146,7 @@ router.get('/actors', function(req, res, next) {
 
             //    If everything went well, send an empty response with the correct
             //    HTTP status.
-
+            console.log('--------------------------------------------------------');
             res.status(200).json(actors);
         }
     });

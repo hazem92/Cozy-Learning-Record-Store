@@ -10,18 +10,18 @@ module.exports = {
     byActor: cozydb.defaultRequests.by('actor'),
     byActivity:cozydb.defaultRequests.by('activity'),
     byVerb:cozydb.defaultRequests.by('verb')
-  }
+  },
 
   actor: {
     all: cozydb.defaultRequests.all,
     byMbox: cozydb.defaultRequests.by('mbox'),
     byName: cozydb.defaultRequests.by('name')
-  }
+  },
 
   verb: {
     all: cozydb.defaultRequests.all,
     byDisplay: cozydb.defaultRequests.by('display')
-  }
+  },
 
   activity: {
     all: cozydb.defaultRequests.all,
