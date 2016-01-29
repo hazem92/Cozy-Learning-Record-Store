@@ -4,156 +4,159 @@ var Verb = require('../models/verb');
 
 // Create a new Verb
 router.post('/verbs', function(req, res, next) {
-      Verb.create(req.body, function(err, verb) {
-        if(err) {
-            /*
-                If an unexpected error occurs, forward it to Express error
-                middleware which will send the error properly formatted.
-            */
-            next(err);
-        } else {
-            /*
-                If everything went well, send the newly created Verb with the
-                correct HTTP status.
-            */
-            res.status(201).send(verb);
-        }
-    });
+  Verb.create(req.body, function(err, verb) {
+    if(err) {
+      /*
+      If an unexpected error occurs, forward it to Express error
+      middleware which will send the error properly formatted.
+      */
+      next(err);
+    } else {
+      /*
+      If everything went well, send the newly created Verb with the
+      correct HTTP status.
+      */
+      res.status(201).send(verb);
+    }
+  });
 });
 
 
 // Fetch an existing verb
 router.get('/verbs/:id', function(req, res, next) {
-	Verb.find(req.params.id, function(err, verb) {
-		if(err) {
-	   		next(err);
-		} else if (!verb) {
-	    /*
-	        If there was no unexpected error, but that the document has not
-	        been found, send the legitimate status code. `verb` is null.
-	    */
-    		res.sendStatus(404);
-			} else {
-				res.status(200).send(verb);
-					}
+  Verb.find(req.params.id, function(err, verb) {
+    if(err) {
+      next(err);
+    } else if (!verb) {
+      /*
+      If there was no unexpected error, but that the document has not
+      been found, send the legitimate status code. `verb` is null.
+      */
+      res.sendStatus(404);
+    } else {
+      res.status(200).send(verb);
+    }
 
-    });
+  });
 });
 
 
 // Update an existing verb
 router.put('/verbs/:id', function(req, res, next) {
-        //First, get the document we want to update.
-		Verb.find(req.params.id, function(err, verb) {
+  //First, get the document we want to update.
+  Verb.find(req.params.id, function(err, verb) {
+    if(err) {
+      /*
+      If an unexpected error occurs, forward it to Express error
+      middleware which will send the error properly formatted.
+      */
+      next(err);
+    } else if(!verb) {
+      /*
+      If there was no unexpected error, but that the document has not
+      been found, send the legitimate status code. `verb` is null.
+      */
+      res.sendStatus(404);
+    } else {
+      /*
+      `verb.updateAttributes` sends a request to the Data System to
+      update the document, given its ID and the fields to update.
+      */
+      Verb.updateAttributes(req.body, function(err, verb) {
         if(err) {
-            /*
-                If an unexpected error occurs, forward it to Express error
-                middleware which will send the error properly formatted.
-            */
-            next(err);
-        } else if(!verb) {
-            /*
-                If there was no unexpected error, but that the document has not
-                been found, send the legitimate status code. `verb` is null.
-            */
-            res.sendStatus(404);
+          /*
+          If an unexpected error occurs, forward it to Express
+          error middleware which will send the error properly
+          formatted.
+          */
+          next(err);
         } else {
-            /*
-                `verb.updateAttributes` sends a request to the Data System to
-                update the document, given its ID and the fields to update.
-            */
-            Verb.updateAttributes(req.body, function(err, verb) {
-                if(err) {
-                    /*
-                        If an unexpected error occurs, forward it to Express
-                        error middleware which will send the error properly
-                        formatted.
-                    */
-                    next(err);
-                } else {
-                    /*
-                        If everything went well, send the fetched verb with the
-                        correct HTTP status.
-                    */
-                    res.status(200).send(verb);
-                }
-            });
+          /*
+          If everything went well, send the fetched verb with the
+          correct HTTP status.
+          */
+          res.status(200).send(verb);
         }
-    });
+      });
+    }
+  });
 });
 
 
 // Remove an existing verb
 router.delete('/verbs/:id', function(req, res, next) {
 
-    /*
-        `Verb.destroy` sends a request to the Data System to update
-        the document, given its ID.
-    */
-    Verb.destroy(req.params.id, function(err) {
-        if(err) {
-            /*
-                If an unexpected error occurs, forward it to Express error
-                middleware which will send the error properly formatted.
-            */
-            next(err);
-        } else {
-            /*
-                If everything went well, send an empty response with the correct
-                HTTP status.
-            */
-            res.sendStatus(204);
-        }
-    });
+  /*
+  `Verb.destroy` sends a request to the Data System to update
+  the document, given its ID.
+  */
+  Verb.destroy(req.params.id, function(err) {
+    if(err) {
+      /*
+      If an unexpected error occurs, forward it to Express error
+      middleware which will send the error properly formatted.
+      */
+      next(err);
+    } else {
+      /*
+      If everything went well, send an empty response with the correct
+      HTTP status.
+      */
+      res.sendStatus(204);
+    }
+  });
 
 });
 
 /// List of all verb
 router.get('/verbs', function(req, res, next) {
-
-    Verb.request('all', function(err, verbs) {
-        if(err) {
-
-              //  If an unexpected error occurs, forward it to Express error
-              //  middleware which will send the error properly formatted.
-
-            next(err);
-        } else {
-
-              //  If everything went well, send an empty response with the correct
-              //  HTTP status.
-
-            res.status(200).json(verbs);
-        }
-    });
-});
-
-/// List of all verb
-router.get('/verbs/:display', function(req, res, next) {
+  // Find verbs by display
+  if(req.query.display) {
     var option = {
-      key: req.params.display
+      key: req.query.display
     }
-    Verb.request('all', option, function(err, verbs) {
-        if(err) {
+    Verb.request('byDisplay', option, function(err, verbs) {
+      if(err) {
 
-              //  If an unexpected error occurs, forward it to Express error
-              //  middleware which will send the error properly formatted.
+        //  If an unexpected error occurs, forward it to Express error
+        //  middleware which will send the error properly formatted.
 
-            next(err);
-        } else if(!verbs){
-          /*
-              If there was no unexpected error, but that the document has not
-              been found, send the legitimate status code. `verb` is null.
-          */
-          res.sendStatus(404);
-        } else {
+        next(err);
+      } else if(!verbs){
+        /*
+        If there was no unexpected error, but that the document has not
+        been found, send the legitimate status code. `verb` is null.
+        */
+        res.sendStatus(404);
+      } else {
 
-              //  If everything went well, send an empty response with the correct
-              //  HTTP status.
+        //  If everything went well, send an empty response with the correct
+        //  HTTP status.
 
-            res.status(200).json(verbs);
-        }
+        res.status(200).json(verbs);
+      }
     });
+  }
+
+  // Find all verbs
+  else {
+    Verb.request('all', function(err, verbs) {
+      if(err) {
+
+        //  If an unexpected error occurs, forward it to Express error
+        //  middleware which will send the error properly formatted.
+
+        next(err);
+      } else {
+
+        //  If everything went well, send an empty response with the correct
+        //  HTTP status.
+
+        res.status(200).json(verbs);
+      }
+    });
+  }
+
 });
 
 // Export the router instance to make it available from other files.
