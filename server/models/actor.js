@@ -7,25 +7,30 @@ var Actor = cozydb.getModel('Actor', {
 
 	//"Agent"
 	"objectType":  {
-        default: '',
-        type: String
-    },
+		default: '',
+		type: String
+	},
 
 	//Full name of the Agent
 	"name":  {
-        default: '',
-        type: String
-    },
-		
+		default: '',
+		type: String
+	},
+
 	//The required format is "mailto:email address", it is one of Inverse Functional Identifiers
 	"mbox":  {
-        default: '',
-        type: String
-    },
+		default: '',
+		type: String
+	},
 
 	//"member": [Object],		//Used when the actor is a group
 
 });
+
+function findActor(name) {
+
+
+}
 
 // export module
 module.exports = Actor;

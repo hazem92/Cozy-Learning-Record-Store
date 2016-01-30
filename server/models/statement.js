@@ -6,14 +6,24 @@ var cozydb = require('cozydb');
 // Only id, actor, verb, object are required
 var Statement = cozydb.getModel('Statement', {
 
-	id: String,			//UUID
-	actor: Object,			//Agent or Group
-	verb: Object,			//Action take
+	//id: String,			//UUID
+	"actor":   {
+        default: null,
+        type: Object
+    },			//Agent or Group
+
+	"verb":   {
+        default: null,
+        type: Object
+    },				//Action take
 
 // we are going at this stage to reduce the object attribute to Activity definition since its definition in the spec is a bit ambiguous
 //	object: Object,		//Activity,Agent ..
 
-  activity: Object,    		//Activity done 
+  "activity":   {
+        default: null,
+        type: Object
+    },	    		//Activity done
 
 /*
 	result: Object,			//Further details about the specified verb
