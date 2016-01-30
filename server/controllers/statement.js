@@ -5,104 +5,13 @@ var Actor = require('../models/actor');
 var Activity = require('../models/activity');
 var Verb = require('../models/verb');
 
+var actor_object;
+var activity_object;
+var verb_object;
+
 // Create a new statement
 router.post('/statements', function(req, res, next) {
-  console.log(req.body.actor);
-  var actor_name = req.body.actor.name;
-  var activity_name = req.body.activity.name;
-  var verb_display = req.body.verb.display;
-  console.log(req.body.actor.name);
-  console.log(req.body.activity.name);
-  console.log(req.body.verb.display);
-  var actor_object;
-  var activity_object;
-  var verb_object;
-
-  if(actor_name) {
-    var options =  {
-      key: actor_name
-    };
-    Actor.request('byName', options, function(err, actor){
-      if(err) {
-
-        next(err);
-      } else if(!actor) {
-
-        return null;
-      } else {
-
-        actor_object = actor[0];
-        console.log(actor_object);
-
-        if(activity_name) {
-          var options =  {
-            key: activity_name
-          };
-          Activity.request('byName', options, function(err, activity){
-            if(err) {
-
-              next(err);
-            } else if(!activity) {
-
-              return null;
-            } else {
-
-              activity_object = activity[0];
-              console.log(activity_object);
-
-              if(verb_display) {
-                var options =  {
-                  key: verb_display
-                };
-                Verb.request('byDisplay', options, function(err, verb){
-                  if(err) {
-
-                    next(err);
-                  } else if(!verb) {
-
-                    return null;
-                  } else {
-
-                    verb_object = verb[0];
-                    console.log(verb_object);
-
-
-                    Statement.create({"actor": actor_object, "verb": verb_object, "activity": activity_object}, function(err, statement) {
-                      if(err) {
-                        /*
-                        If an unexpected error occurs, forward it to Express error
-                        middleware which will send the error properly formatted.
-                        */
-                        next(err);
-                      } else {
-                        /*
-                        If everything went well, send the newly created statement with the
-                        correct HTTP status.
-                        */
-                        res.status(201).send(statement);
-                      }
-                    });
-                  }
-                });
-              }
-
-
-            }
-          });
-        }
-
-      }
-    });
-  }
-
-
-
-
-  console.log(actor_object);
-  console.log(activity_object);
-  console.log(verb_object);
-
-
+  findOrCreateActor(req, res, next);
 });
 
 function findOrCreateActor(req, res, next) {
@@ -127,13 +36,15 @@ function findOrCreateActor(req, res, next) {
           }
         });
       } else {
-
+        console.log("------------");
         actor_object = actor[0];
         console.log(actor_object);
       }
 
       if(actor_object) {
         findOrCreateActivity(req, res, next);
+      } else {
+        next(err);
       }
     });
   }
@@ -165,12 +76,71 @@ function findOrCreateActivity(req, res, next) {
         activity_object = activity[0];
         console.log(activity_object);
       }
+
+      if (activity_object) {
+        findOrCreateVerb(req, res, next);
+      } else {
+        next(err);
+      }
     });
   }
 }
 
 function findOrCreateVerb(req, res, next) {
+  var verb_display = req.body.verb.display;
+  if(verb_display) {
+    var options =  {
+      key: verb_display
+    };
+    Verb.request('byDisplay', options, function(err, verb){
+      if(err) {
 
+        next(err);
+      } else if(!verb) {
+
+        Verb.create(req.body.verb, function(err, verb) {
+          if(err) {
+
+            next(err);
+          } else {
+
+            verb_object = verb;
+          }
+        });
+      } else {
+
+        verb_object = verb[0];
+        console.log(verb_object);
+      }
+
+      if(verb_object) {
+        createStatement(req, res, next);
+      } else {
+        next(err);
+      }
+    });
+  }
+}
+
+function createStatement(req, res, next) {
+  console.log(actor_object);
+  console.log(verb_object);
+  console.log(activity_object);
+  Statement.create({"actor": actor_object, "verb": verb_object, "activity": activity_object}, function(err, statement) {
+    if(err) {
+      /*
+      If an unexpected error occurs, forward it to Express error
+      middleware which will send the error properly formatted.
+      */
+      next(err);
+    } else {
+      /*
+      If everything went well, send the newly created statement with the
+      correct HTTP status.
+      */
+      res.status(201).send(statement);
+    }
+  });
 }
 
 
