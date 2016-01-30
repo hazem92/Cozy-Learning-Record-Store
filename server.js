@@ -12,7 +12,9 @@ var cozydb = require('cozydb');
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static('client'));
-
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 /*
     Define routes and their handler.

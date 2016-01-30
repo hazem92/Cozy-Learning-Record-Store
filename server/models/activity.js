@@ -5,12 +5,22 @@ var cozydb = require('cozydb');
 // This definition could be exte,ded to add more attributes..
 var Activity = cozydb.getModel('Activity', {
 
-	id: String,		//IRI
-  name: [{key:"langTag", value:"value"}],
-	description: [{key:"langTag", value:"value"}],
-  type: String,		//IRI
-	moreInfo: String, 	//IRI
-
+  "name":  {
+        default: '',
+        type: String
+    },
+  "type":  {
+        default: '',
+        type: String
+    },
+	"moreInfo":  {
+        default: '',
+        type: String
+    },
+	"description":  {
+        default: '',
+        type: String
+    },
 
 });
 
