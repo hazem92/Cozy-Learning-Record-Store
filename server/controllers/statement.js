@@ -21,10 +21,11 @@ function findOrCreateActor(req, res, next) {
       key: actor_name
     };
     Actor.request('byName', options, function(err, actor){
+
       if(err) {
 
         next(err);
-      } else if(!actor) {
+      } else if(!actor || actor.length == 0) {
 
         Actor.create(req.body.actor, function(err, actor) {
           if(err) {
@@ -33,12 +34,12 @@ function findOrCreateActor(req, res, next) {
           } else {
 
             actor_object = actor;
+            console.log(actor);
           }
         });
       } else {
-        console.log("------------");
         actor_object = actor[0];
-        console.log(actor_object);
+        console.log(actor);
       }
 
       if(actor_object) {
@@ -60,19 +61,18 @@ function findOrCreateActivity(req, res, next) {
       if(err) {
 
         next(err);
-      } else if(!activity) {
+      } else if(!activity || activity.length == 0) {
 
         Activity.create(req.body.activity, function(err, activity) {
           if(err) {
 
             next(err);
           } else {
-
             activity_object = activity;
+            console.log(activity);
           }
         });
       } else {
-
         activity_object = activity[0];
         console.log(activity_object);
       }
@@ -96,15 +96,15 @@ function findOrCreateVerb(req, res, next) {
       if(err) {
 
         next(err);
-      } else if(!verb) {
+      } else if(!verb || verb.length == 0) {
 
         Verb.create(req.body.verb, function(err, verb) {
           if(err) {
 
             next(err);
           } else {
-
             verb_object = verb;
+            console.log(verb);
           }
         });
       } else {
