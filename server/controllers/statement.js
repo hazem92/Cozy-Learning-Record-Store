@@ -230,212 +230,153 @@ router.delete('/statements/:id', function(req, res, next) {
 
 });
 
+// Remove all existing statements
+router.delete('/statements', function(req, res, next) {
+
+  Statement.requestDestroy('all', function(err) {
+    if(err) {
+      /*
+      If an unexpected error occurs, forward it to Express error
+      middleware which will send the error properly formatted.
+      */
+      next(err);
+    } else {
+      /*
+      If everything went well, send an empty response with the correct
+      HTTP status.
+      */
+      res.sendStatus(204);
+    }
+  });
+
+});
+
 
 /// List of all statements
 router.get('/statements', function(req, res, next) {
+  // Find statements by actor name
+  if(req.query.actor_name) {
+    console.log(req.query.actor_name);
+    var options =  {
+      key: req.query.actor_name
+    };
+    console.log(options);
+    Actor.request('byName', options, function(err, actor){
+      if(err) {
 
-  Statement.request('all', function(err, statements) {
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else {
-      /*
-      If everything went well, send an empty response with the correct
-      HTTP status.
-      */
-      res.status(200).json(statements);
-    }
-  });
+        next(err);
+      } else if(!actor || actor.length == 0) {
+        console.log(actor);
+        res.sendStatus(404);
+      } else {
+
+        var option =  {
+          key: actor[0]
+        };
+        console.log(option);
+        Statement.request('byActor', option, function(err, statements) {
+          if(err) {
+
+            next(err);
+          } else if(!statements || statements.length == 0) {
+
+            res.sendStatus(404);
+          }  else {
+
+            res.status(200).json(statements);
+          }
+        });
+      }
+    });
+  }
+
+  // Find statements by activity name
+  else if(req.query.activity_name) {
+    var options =  {
+      key: req.query.activity_name
+    };
+    Activity.request('byName', options, function(err, activity){
+      if(err) {
+
+        next(err);
+      } else if(!activity || activity.length == 0) {
+
+        res.sendStatus(404);
+      } else {
+
+        var option =  {
+          key: activity[0]
+        };
+
+        Statement.request('byActivity', option, function(err, statements) {
+          if(err) {
+
+            next(err);
+          } else if(!statements || statements.length == 0) {
+
+            res.sendStatus(404);
+          }  else {
+
+            res.status(200).json(statements);
+          }
+        });
+      }
+    });
+  }
+
+  // Find statements by verb
+  else if(req.query.verb_display) {
+    var options =  {
+      key: req.query.verb_display
+    };
+    Verb.request('byDisplay', options, function(err, verb){
+      if(err) {
+
+        next(err);
+      } else if(!verb || verb.length == 0) {
+
+        res.sendStatus(404);
+      } else {
+
+        var option =  {
+          key: verb[0]
+        };
+        console.log(verb[0]);
+        Statement.request('byVerb', option, function(err, statements) {
+          if(err) {
+
+            next(err);
+          } else if(!statements || statements.length == 0) {
+
+            res.sendStatus(404);
+          }  else {
+
+            res.status(200).json(statements);
+          }
+        });
+      }
+    });
+  }
+  // Find all statements
+  else {
+    Statement.request('all', function(err, statements) {
+      if(err) {
+        /*
+        If an unexpected error occurs, forward it to Express error
+        middleware which will send the error properly formatted.
+        */
+        next(err);
+      } else {
+        /*
+        If everything went well, send an empty response with the correct
+        HTTP status.
+        */
+        res.status(200).json(statements);
+      }
+    });
+  }
+
 });
 
-/// List of all statements, for a given actor name
-router.get('/statements/:actor_name', function(req, res, next) {
-
-  // could be changed to fit the view in request0j parameters
-  var options =  {
-    key: req.params.actor_name
-  };
-  Actor.request('byName', options, function(err, actor){
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else if(!actor) {
-      /*
-      If there was no unexpected error, but that the document has not
-      been found, send the legitimate status code. `statement` is null.
-      */
-      res.sendStatus(404);
-    } else {
-      /*
-      If everything went well, send an empty response with the correct
-      HTTP status.
-      */
-      var option =  {
-        key: actor
-      };
-
-      Statement.request('byActor', option, function(err, statements) {
-        if(err) {
-          /*
-          If an unexpected error occurs, forward it to Express error
-          middleware which will send the error properly formatted.
-          */
-          next(err);
-        } else if(!statements) {
-          /*
-          If there was no unexpected error, but that the document has not
-          been found, send the legitimate status code. `statement` is null.
-          */
-          res.sendStatus(404);
-        }  else {
-          /*
-          If everything went well, send an empty response with the correct
-          HTTP status.
-          */
-          res.status(200).json(statements);
-        }
-      });
-    }
-  });
-});
-
-/// List of all statements, for a given activity name
-router.get('/statements/:activity_name', function(req, res, next) {
-
-  // could be changed to fit the view in request0j parameters
-  var options =  {
-    key: req.params.activity_name
-  };
-  Activity.request('byName', options, function(err, activity){
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else if(!activity) {
-      /*
-      If there was no unexpected error, but that the document has not
-      been found, send the legitimate status code. `statement` is null.
-      */
-      res.sendStatus(404);
-    } else {
-      /*
-      If everything went well, send an empty response with the correct
-      HTTP status.
-      */
-      var option =  {
-        key: activity
-      };
-
-      Statement.request('byActivity', option, function(err, statements) {
-        if(err) {
-          /*
-          If an unexpected error occurs, forward it to Express error
-          middleware which will send the error properly formatted.
-          */
-          next(err);
-        } else if(!statements) {
-          /*
-          If there was no unexpected error, but that the document has not
-          been found, send the legitimate status code. `statement` is null.
-          */
-          res.sendStatus(404);
-        }  else {
-          /*
-          If everything went well, send an empty response with the correct
-          HTTP status.
-          */
-          res.status(200).json(statements);
-        }
-      });
-    }
-  });
-});
-
-/// List of all statements, for a given verb
-router.get('/statements/:verb', function(req, res, next) {
-
-  // could be changed to fit the view in request0j parameters
-  var options =  {
-    key: req.params.verb
-  };
-  Verb.request('byDisplay', options, function(err, verb){
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else if(!verb) {
-      /*
-      If there was no unexpected error, but that the document has not
-      been found, send the legitimate status code. `statement` is null.
-      */
-      res.sendStatus(404);
-    } else {
-      /*
-      If everything went well, send an empty response with the correct
-      HTTP status.
-      */
-      var option =  {
-        key: verb
-      };
-
-      Statement.request('byVerb', option, function(err, statements) {
-        if(err) {
-          /*
-          If an unexpected error occurs, forward it to Express error
-          middleware which will send the error properly formatted.
-          */
-          next(err);
-        } else if(!statements) {
-          /*
-          If there was no unexpected error, but that the document has not
-          been found, send the legitimate status code. `statement` is null.
-          */
-          res.sendStatus(404);
-        }  else {
-          /*
-          If everything went well, send an empty response with the correct
-          HTTP status.
-          */
-          res.status(200).json(statements);
-        }
-      });
-    }
-  });
-});
-/*
-/// List of all statements, for a given attribute !
-router.get('/statements', function(req, res, next) {
-
-// could be changed to fit the view in request0j parameters
-var options =  {
-key: 'Joseph'
-};
-
-Statement.request('byActor', options, function(err, statements) {
-if(err) {
-
-//    If an unexpected error occurs, forward it to Express error
-//   middleware which will send the error properly formatted.
-
-next(err);
-} else {
-
-//    If everything went well, send an empty response with the correct
-//    HTTP status.
-
-res.status(200).json(statements);
-}
-});
-});*/
 // Export the router instance to make it available from other files.
 module.exports = router;
