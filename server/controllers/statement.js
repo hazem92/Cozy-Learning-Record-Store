@@ -11,18 +11,21 @@ var verb_object;
 
 // Create a new statement
 router.post('/statements', function(req, res, next) {
-  findOrCreateActor(req, res, next, function(req, res, next) {
-    findOrCreateActivity(req, res, next, function (req, res, next) {
-      findOrCreateVerb(req, res, next, function functionName() {
+  var actor_name = req.body.actor.name;
+  var activity_name = req.body.activity.name;
+  var verb_display = req.body.verb.display;
+
+  findOrCreateActor(req, res, next, actor_name, function(req, res, next) {
+    findOrCreateActivity(req, res, next, activity_name, function (req, res, next) {
+      findOrCreateVerb(req, res, next, verb_display, function (req, res, next) {
         createStatement(req, res, next);
       });
     });
   });
 });
 
-function findOrCreateActor(req, res, next, callback) {
+function findOrCreateActor(req, res, next, actor_name, callback) {
 
-  var actor_name = req.body.actor.name;
   if(actor_name) {
     var options =  {
       key: actor_name
@@ -39,24 +42,22 @@ function findOrCreateActor(req, res, next, callback) {
 
             next(err);
           } else {
-
             actor_object = actor;
+            callback(req, res, next);
           }
         });
       } else {
         actor_object = actor[0];
-      }
-      if(actor_object) {
         callback(req, res, next);
-      } else {
-        next(err);
       }
     });
+  } else {
+    res.status(400).send('Actor name cannot be empty');
   }
 }
 
-function findOrCreateActivity(req, res, next, callback) {
-  var activity_name = req.body.activity.name;
+function findOrCreateActivity(req, res, next, activity_name, callback) {
+
   if(activity_name) {
     var options =  {
       key: activity_name
@@ -73,23 +74,21 @@ function findOrCreateActivity(req, res, next, callback) {
             next(err);
           } else {
             activity_object = activity;
+            callback(req, res, next);
           }
         });
       } else {
         activity_object = activity[0];
-      }
-
-      if (activity_object) {
         callback(req, res, next);
-      } else {
-        next(err);
       }
     });
+  } else {
+    res.status(400).send('Activity name cannot be empty');
   }
 }
 
-function findOrCreateVerb(req, res, next, callback) {
-  var verb_display = req.body.verb.display;
+function findOrCreateVerb(req, res, next, verb_display, callback) {
+
   if(verb_display) {
     var options =  {
       key: verb_display
@@ -106,19 +105,16 @@ function findOrCreateVerb(req, res, next, callback) {
             next(err);
           } else {
             verb_object = verb;
+            callback(req, res, next);
           }
         });
       } else {
-
         verb_object = verb[0];
-      }
-
-      if(verb_object) {
         callback(req, res, next);
-      } else {
-        next(err);
       }
     });
+  } else {
+    res.status(400).send('Verb display cannot be empty');
   }
 }
 

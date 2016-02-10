@@ -5,10 +5,12 @@ var Verb = require('../models/verb');
 // Create a new Verb
 router.post('/verbs', function(req, res, next) {
   var verb_display = req.body.display;
-  findOrCreateVerb(req, res, next, verb_display);
+  findOrCreateVerb(req, res, next, verb_display, function (status, message) {
+    res.status(status).send(message);
+  });
 });
 
-function findOrCreateVerb(req, res, next, verb_display) {
+function findOrCreateVerb(req, res, next, verb_display, callback) {
 
   if(verb_display) {
     var options =  {
@@ -25,15 +27,15 @@ function findOrCreateVerb(req, res, next, verb_display) {
 
             next(err);
           } else {
-            res.status(201).send(verb);
+            callback(201, verb);
           }
         });
       } else {
-        res.status(201).send(verb[0]);
+        callback(201, verb[0])
       }
     });
   } else {
-    res.status(400).send('Display cannot be empty');
+    callback(400, 'Verb display cannot be empty');
   }
 }
 
