@@ -4,22 +4,41 @@ var Verb = require('../models/verb');
 
 // Create a new Verb
 router.post('/verbs', function(req, res, next) {
-  Verb.create(req.body, function(err, verb) {
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else {
-      /*
-      If everything went well, send the newly created Verb with the
-      correct HTTP status.
-      */
-      res.status(201).send(verb);
-    }
+  var verb_display = req.body.display;
+  findOrCreateVerb(req, res, next, verb_display, function (status, message) {
+    res.status(status).send(message);
   });
 });
+
+function findOrCreateVerb(req, res, next, verb_display, callback) {
+
+  if(verb_display) {
+    var options =  {
+      key: verb_display
+    };
+    Verb.request('byDisplay', options, function(err, verb){
+      if(err) {
+
+        next(err);
+      } else if(!verb || verb.length == 0) {
+
+        Verb.create(req.body, function(err, verb) {
+          if(err) {
+
+            next(err);
+          } else {
+            callback(201, verb);
+          }
+        });
+      } else {
+        callback(201, verb[0])
+      }
+    });
+  } else {
+    callback(400, 'Verb display cannot be empty');
+  }
+}
+
 
 
 // Fetch an existing verb

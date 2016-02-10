@@ -11,11 +11,21 @@ var verb_object;
 
 // Create a new statement
 router.post('/statements', function(req, res, next) {
-  findOrCreateActor(req, res, next);
+  var actor_name = req.body.actor.name;
+  var activity_name = req.body.activity.name;
+  var verb_display = req.body.verb.display;
+
+  findOrCreateActor(req, res, next, actor_name, function(req, res, next) {
+    findOrCreateActivity(req, res, next, activity_name, function (req, res, next) {
+      findOrCreateVerb(req, res, next, verb_display, function (req, res, next) {
+        createStatement(req, res, next);
+      });
+    });
+  });
 });
 
-function findOrCreateActor(req, res, next) {
-  var actor_name = req.body.actor.name;
+function findOrCreateActor(req, res, next, actor_name, callback) {
+
   if(actor_name) {
     var options =  {
       key: actor_name
@@ -32,27 +42,22 @@ function findOrCreateActor(req, res, next) {
 
             next(err);
           } else {
-
             actor_object = actor;
-            console.log(actor);
+            callback(req, res, next);
           }
         });
       } else {
         actor_object = actor[0];
-        console.log(actor);
-      }
-
-      if(actor_object) {
-        findOrCreateActivity(req, res, next);
-      } else {
-        next(err);
+        callback(req, res, next);
       }
     });
+  } else {
+    res.status(400).send('Actor name cannot be empty');
   }
 }
 
-function findOrCreateActivity(req, res, next) {
-  var activity_name = req.body.activity.name;
+function findOrCreateActivity(req, res, next, activity_name, callback) {
+
   if(activity_name) {
     var options =  {
       key: activity_name
@@ -69,25 +74,21 @@ function findOrCreateActivity(req, res, next) {
             next(err);
           } else {
             activity_object = activity;
-            console.log(activity);
+            callback(req, res, next);
           }
         });
       } else {
         activity_object = activity[0];
-        console.log(activity_object);
-      }
-
-      if (activity_object) {
-        findOrCreateVerb(req, res, next);
-      } else {
-        next(err);
+        callback(req, res, next);
       }
     });
+  } else {
+    res.status(400).send('Activity name cannot be empty');
   }
 }
 
-function findOrCreateVerb(req, res, next) {
-  var verb_display = req.body.verb.display;
+function findOrCreateVerb(req, res, next, verb_display, callback) {
+
   if(verb_display) {
     var options =  {
       key: verb_display
@@ -104,40 +105,27 @@ function findOrCreateVerb(req, res, next) {
             next(err);
           } else {
             verb_object = verb;
-            console.log(verb);
+            callback(req, res, next);
           }
         });
       } else {
-
         verb_object = verb[0];
-        console.log(verb_object);
-      }
-
-      if(verb_object) {
-        createStatement(req, res, next);
-      } else {
-        next(err);
+        callback(req, res, next);
       }
     });
+  } else {
+    res.status(400).send('Verb display cannot be empty');
   }
 }
 
 function createStatement(req, res, next) {
-  console.log(actor_object);
-  console.log(verb_object);
-  console.log(activity_object);
+
   Statement.create({"actor": actor_object, "verb": verb_object, "activity": activity_object}, function(err, statement) {
     if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
+
       next(err);
     } else {
-      /*
-      If everything went well, send the newly created statement with the
-      correct HTTP status.
-      */
+
       res.status(201).send(statement);
     }
   });
@@ -256,24 +244,20 @@ router.delete('/statements', function(req, res, next) {
 router.get('/statements', function(req, res, next) {
   // Find statements by actor name
   if(req.query.actor_name) {
-    console.log(req.query.actor_name);
     var options =  {
       key: req.query.actor_name
     };
-    console.log(options);
     Actor.request('byName', options, function(err, actor){
       if(err) {
 
         next(err);
       } else if(!actor || actor.length == 0) {
-        console.log(actor);
         res.sendStatus(404);
       } else {
 
         var option =  {
           key: actor[0]
         };
-        console.log(option);
         Statement.request('byActor', option, function(err, statements) {
           if(err) {
 
@@ -341,7 +325,6 @@ router.get('/statements', function(req, res, next) {
         var option =  {
           key: verb[0]
         };
-        console.log(verb[0]);
         Statement.request('byVerb', option, function(err, statements) {
           if(err) {
 
