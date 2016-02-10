@@ -11,10 +11,17 @@ var verb_object;
 
 // Create a new statement
 router.post('/statements', function(req, res, next) {
-  findOrCreateActor(req, res, next);
+  findOrCreateActor(req, res, next, function(req, res, next) {
+    findOrCreateActivity(req, res, next, function (req, res, next) {
+      findOrCreateVerb(req, res, next, function functionName() {
+        createStatement(req, res, next);
+      });
+    });
+  });
 });
 
-function findOrCreateActor(req, res, next) {
+function findOrCreateActor(req, res, next, callback) {
+
   var actor_name = req.body.actor.name;
   if(actor_name) {
     var options =  {
@@ -38,11 +45,9 @@ function findOrCreateActor(req, res, next) {
         });
       } else {
         actor_object = actor[0];
-
       }
-
       if(actor_object) {
-        findOrCreateActivity(req, res, next);
+        callback(req, res, next);
       } else {
         next(err);
       }
@@ -50,7 +55,7 @@ function findOrCreateActor(req, res, next) {
   }
 }
 
-function findOrCreateActivity(req, res, next) {
+function findOrCreateActivity(req, res, next, callback) {
   var activity_name = req.body.activity.name;
   if(activity_name) {
     var options =  {
@@ -72,9 +77,10 @@ function findOrCreateActivity(req, res, next) {
         });
       } else {
         activity_object = activity[0];
+      }
 
       if (activity_object) {
-        findOrCreateVerb(req, res, next);
+        callback(req, res, next);
       } else {
         next(err);
       }
@@ -82,7 +88,7 @@ function findOrCreateActivity(req, res, next) {
   }
 }
 
-function findOrCreateVerb(req, res, next) {
+function findOrCreateVerb(req, res, next, callback) {
   var verb_display = req.body.verb.display;
   if(verb_display) {
     var options =  {
@@ -108,7 +114,7 @@ function findOrCreateVerb(req, res, next) {
       }
 
       if(verb_object) {
-        createStatement(req, res, next);
+        callback(req, res, next);
       } else {
         next(err);
       }
@@ -120,16 +126,10 @@ function createStatement(req, res, next) {
 
   Statement.create({"actor": actor_object, "verb": verb_object, "activity": activity_object}, function(err, statement) {
     if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
+
       next(err);
     } else {
-      /*
-      If everything went well, send the newly created statement with the
-      correct HTTP status.
-      */
+
       res.status(201).send(statement);
     }
   });

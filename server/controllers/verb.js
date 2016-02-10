@@ -4,22 +4,61 @@ var Verb = require('../models/verb');
 
 // Create a new Verb
 router.post('/verbs', function(req, res, next) {
-  Verb.create(req.body, function(err, verb) {
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else {
-      /*
-      If everything went well, send the newly created Verb with the
-      correct HTTP status.
-      */
-      res.status(201).send(verb);
-    }
-  });
+  // console.log(req.body);
+  // Verb.create(req.body, function(err, verb) {
+  //   if(err) {
+  //     /*
+  //     If an unexpected error occurs, forward it to Express error
+  //     middleware which will send the error properly formatted.
+  //     */
+  //     next(err);
+  //   } else {
+  //     /*
+  //     If everything went well, send the newly created Verb with the
+  //     correct HTTP status.
+  //     */
+  //     res.status(201).send(verb);
+  //   }
+  // });
+  findOrCreateVerb(req, res, next);
 });
+
+function findOrCreateVerb(req, res, next) {
+  var verb_display = req.body.display;
+  if(verb_display) {
+    var options =  {
+      key: verb_display
+    };
+    Verb.request('byDisplay', options, function(err, verb){
+      if(err) {
+
+        next(err);
+      } else if(!verb || verb.length == 0) {
+
+        Verb.create(req.body.verb, function(err, verb) {
+          if(err) {
+
+            next(err);
+          } else {
+            verb_object = verb;
+          }
+        });
+      } else {
+
+        verb_object = verb[0];
+      }
+
+      if(verb_object) {
+        res.status(201).send(verb);
+      } else {
+        next(err);
+      }
+    });
+  } else {
+    res.status(400).send('Display cannot be empty');
+  }
+}
+
 
 
 // Fetch an existing verb
