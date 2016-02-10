@@ -4,23 +4,41 @@ var Actor = require('../models/actor');
 
 // Create a new Actor
 router.post('/actors', function(req, res, next) {
-
-  Actor.create(req.body, function(err, actor) {
-    if(err) {
-      /*
-      If an unexpected error occurs, forward it to Express error
-      middleware which will send the error properly formatted.
-      */
-      next(err);
-    } else {
-      /*
-      If everything went well, send the newly created actor with the
-      correct HTTP status.
-      */
-      res.status(201).send(actor);
-    }
+  var actor_name = req.body.name;
+  findOrCreateActor(req, res, next, actor_name, function (status, message) {
+    res.status(status).send(message);
   });
 });
+
+function findOrCreateActor(req, res, next, actor_name, callback) {
+
+  if(actor_name) {
+    var options =  {
+      key: actor_name
+    };
+    Actor.request('byName', options, function(err, actor){
+
+      if(err) {
+
+        next(err);
+      } else if(!actor || actor.length == 0) {
+
+        Actor.create(req.body, function(err, actor) {
+          if(err) {
+
+            next(err);
+          } else {
+            callback(201, actor);
+          }
+        });
+      } else {
+        callback(201, actor[0]);
+      }
+    });
+  } else {
+    callback(400, 'Actor name cannot be empty');
+  }
+}
 
 
 // Fetch an existing actor by id
