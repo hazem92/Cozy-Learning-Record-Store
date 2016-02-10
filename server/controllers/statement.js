@@ -34,12 +34,11 @@ function findOrCreateActor(req, res, next) {
           } else {
 
             actor_object = actor;
-            console.log(actor);
           }
         });
       } else {
         actor_object = actor[0];
-        console.log(actor);
+
       }
 
       if(actor_object) {
@@ -69,13 +68,10 @@ function findOrCreateActivity(req, res, next) {
             next(err);
           } else {
             activity_object = activity;
-            console.log(activity);
           }
         });
       } else {
         activity_object = activity[0];
-        console.log(activity_object);
-      }
 
       if (activity_object) {
         findOrCreateVerb(req, res, next);
@@ -104,13 +100,11 @@ function findOrCreateVerb(req, res, next) {
             next(err);
           } else {
             verb_object = verb;
-            console.log(verb);
           }
         });
       } else {
 
         verb_object = verb[0];
-        console.log(verb_object);
       }
 
       if(verb_object) {
@@ -123,9 +117,7 @@ function findOrCreateVerb(req, res, next) {
 }
 
 function createStatement(req, res, next) {
-  console.log(actor_object);
-  console.log(verb_object);
-  console.log(activity_object);
+
   Statement.create({"actor": actor_object, "verb": verb_object, "activity": activity_object}, function(err, statement) {
     if(err) {
       /*
@@ -256,24 +248,20 @@ router.delete('/statements', function(req, res, next) {
 router.get('/statements', function(req, res, next) {
   // Find statements by actor name
   if(req.query.actor_name) {
-    console.log(req.query.actor_name);
     var options =  {
       key: req.query.actor_name
     };
-    console.log(options);
     Actor.request('byName', options, function(err, actor){
       if(err) {
 
         next(err);
       } else if(!actor || actor.length == 0) {
-        console.log(actor);
         res.sendStatus(404);
       } else {
 
         var option =  {
           key: actor[0]
         };
-        console.log(option);
         Statement.request('byActor', option, function(err, statements) {
           if(err) {
 
@@ -341,7 +329,6 @@ router.get('/statements', function(req, res, next) {
         var option =  {
           key: verb[0]
         };
-        console.log(verb[0]);
         Statement.request('byVerb', option, function(err, statements) {
           if(err) {
 
