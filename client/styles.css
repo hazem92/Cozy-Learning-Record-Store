@@ -116,6 +116,15 @@ button:active {
     background: #ffffff;
 }
 
+[role="navigation"] li[principal-entity="true"] {
+    background: #6666ff ;
+    border-style: ridge;
+}
+
+[role="navigation"] li[principal-entity="false"] {
+    background: #9999ff ;
+}
+
 [role="navigation"] li:hover {
     background: #e5e5e5;
 }
