@@ -48,4 +48,6 @@ cozydb.configure(__dirname, null, function() {
 
       console.log('Cozy Learning Record Store app listening at http://%s:%s', host, port);
     });
+
+    module.exports = server ;
 });
