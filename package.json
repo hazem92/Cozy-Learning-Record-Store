@@ -10,6 +10,8 @@
     "morgan": "1.6.1"
   },
   "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-http": "^1.0.0",
     "nodemon": "1.8.1"
   },
   "scripts": {
@@ -32,7 +34,7 @@
   "author": "Br01",
   "license": "MIT",
   "bugs": {
-  "url": "https://github.com/hazem92/Coz_Learning_Record_Store/issues"
+    "url": "https://github.com/hazem92/Coz_Learning_Record_Store/issues"
   },
   "homepage": "https://github.com/hazem92/Coz_Learning_Record_Store"
 }
