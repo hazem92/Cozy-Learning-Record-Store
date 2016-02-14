@@ -6,7 +6,7 @@ router.get('/public', function(req, res, next) {
     res.status(200).send('Hello, We are building a nice Learning Record Store in your cozy world');
 });
 
-router.get('/public/', function(req, res, next) {
+router.get('/public/verbs', function(req, res, next) {
     res.redirect("/verbs");
 });
 
