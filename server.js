@@ -4,7 +4,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var cozydb = require('cozydb');
-
+var path = require('path');
+global.appRoot = path.resolve(__dirname);
 
 /*
     Configuration section.

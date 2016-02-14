@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 // Hello world public !
 router.get('/public', function(req, res, next) {
     res.status(200).send('Hello, We are building a nice Learning Record Store in your cozy world');
@@ -13,7 +14,7 @@ router.get('/public/verbs', function(req, res, next) {
   var body = new EventEmitter();
 
 /* Need to find a solution for this*/
-  request("http://localhost:9250/verbs", function(error, response, data) {
+  request("/verbs", function(error, response, data) {
       body.data = data;
       body.emit('update'); console.log(data) ;
   });
