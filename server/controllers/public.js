@@ -12,14 +12,14 @@ router.get('/public/verbs', function(req, res, next) {
   var EventEmitter = require("events").EventEmitter;
   var body = new EventEmitter();
 
-
-  request("/verbs", function(error, response, data) {
+/* Need to find a solution for this*/
+  request("http://localhost:9250/verbs", function(error, response, data) {
       body.data = data;
-      body.emit('update');
+      body.emit('update'); console.log(data) ;
   });
 
   body.on('update', function () {
-    res.status(200).send(body.data); 
+    res.status(200).send(body.data); console.log("res") ;
   });
 
 });
