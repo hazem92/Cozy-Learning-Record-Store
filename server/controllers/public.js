@@ -7,7 +7,7 @@ router.get('/public', function(req, res, next) {
 });
 
 router.get('/public/', function(req, res, next) {
-    res.redirect("/");
+    res.redirect("/verbs");
 });
 
 module.exports = router;
