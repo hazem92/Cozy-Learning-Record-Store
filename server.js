@@ -34,6 +34,9 @@ app.use(activityController);
 var verbController = require('./server/controllers/verb');
 app.use(verbController);
 
+var verbController = require('./server/controllers/public');
+app.use(verbController);
+
 
 /*
     CouchDB views initialization. It must be done before starting the server.
