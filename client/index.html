@@ -6,23 +6,56 @@
     </head>
     <body role="application">
         <ul role="navigation">
-            <li aria-selected="true"><a href="#welcome"> Welcome </a></li>
-            <li aria-selected="false"><a href="#crud-fetch">Fetch an existing Statement</a></li>
-            <li aria-selected="false"><a href="#crud-delete">Delete an existing Statement</a></li>
-            <li aria-selected="false"><a href="#crud-list">List of Statements</a></li>
+            <li aria-selected="true" principal-entity="true"><a href="#welcome"> Welcome </a></li>
+            <li aria-selected="true" principal-entity="false"><a href="#welcome-developers"> Developers </a></li>
+            <li aria-selected="false" principal-entity="true"><a href="#welcome-statements"> Statements </a></li>
+            <li aria-selected="false" principal-entity="false" ><a href="#crud-list-statements" >List of Statements</a></li>
+            <li aria-selected="false" principal-entity="false"><a href="#crud-fetch">Fetch an existing Statement</a></li>
+            <li aria-selected="false" principal-entity="false"><a href="#crud-delete">Delete an existing Statement</a></li>
+            <li aria-selected="false" principal-entity="true"><a href="#welcome-activities"> Activities </a></li>
+            <li aria-selected="false" principal-entity="false" ><a href="#crud-list-activities">List of Activities</a></li>
+            <li aria-selected="false" principal-entity="true"><a href="#welcome-actors"> Actors </a></li>
+            <li aria-selected="false" principal-entity="false" ><a href="#crud-list-actors">List of Actors</a></li>
+            <li aria-selected="false" principal-entity="true"><a href="#welcome-verbs"> Verbs </a></li>
+            <li aria-selected="false" principal-entity="false" ><a href="#crud-list-verbs">List of Verbs</a></li>
         </ul>
 
         <div role="main">
 
           <div role="panel" id="welcome">
               <h2>Welcome To Cozy Learning Record Store Application Interface <br>
-                Here you can find : a Statement by its ID delete it or list all Statements
+                Here you can find : all Statements, Activities, Actors and Verbs
                 in the LRS
               </h2>
               <p> How to use this application :
               WIP</p>
           </div>
-
+          <div role="panel" id="welcome-developers">
+              <h2> This was proudly brought to you by
+              </h2>
+              <h3> Hazem AMARA </h3>
+              <h3> Zelong CHEN </h3>
+          </div>
+          <div role="panel" id="welcome-statements">
+              <h2> Below you will find all operations related to Statements
+              </h2>
+              <p>What is a Statement ? </p>
+          </div>
+          <div role="panel" id="welcome-activities">
+              <h2> Below you will find all operations related to Activities
+              </h2>
+              <p>What is an Activity ? </p>
+          </div>
+          <div role="panel" id="welcome-actors">
+              <h2> Below you will find all operations related to Actors
+              </h2>
+              <p>What is an Actor ? </p>
+          </div>
+          <div role="panel" id="welcome-verbs">
+              <h2> Below you will find all operations related to Verbs
+              </h2>
+              <p>What is a Verb ? </p>
+          </div>
 
             <div role="panel" id="crud-fetch">
                 <h2>Fetch an existing Statement</h2>
@@ -56,7 +89,7 @@
             </div>
 
 
-            <div role="panel" id="crud-list">
+            <div role="panel" id="crud-list-statements">
                 <h2>List all existing Statements </h2>
                 <div>
                     <button>Submit request GET /statements/</button>
@@ -67,6 +100,44 @@
                     <pre class="body"></pre>
                 </div>
             </div>
+
+
+            <div role="panel" id="crud-list-activities">
+                <h2>List all existing Activities </h2>
+                <div>
+                    <button>Submit request GET /activities/</button>
+                </div>
+                <div class="result">
+                    <h3>Request's response:</h3>
+                    <p class="status">Status code: <span></span></p>
+                    <pre class="body"></pre>
+                </div>
+            </div>
+
+            <div role="panel" id="crud-list-actors">
+                <h2>List all existing Actors </h2>
+                <div>
+                    <button>Submit request GET /actors/</button>
+                </div>
+                <div class="result">
+                    <h3>Request's response:</h3>
+                    <p class="status">Status code: <span></span></p>
+                    <pre class="body"></pre>
+                </div>
+            </div>
+
+            <div role="panel" id="crud-list-verbs">
+                <h2>List all existing Verbs </h2>
+                <div>
+                    <button>Submit request GET /verbs/</button>
+                </div>
+                <div class="result">
+                    <h3>Request's response:</h3>
+                    <p class="status">Status code: <span></span></p>
+                    <pre class="body"></pre>
+                </div>
+            </div>
+
         </div>
 
                 <script src="scripts/jquery.min.js"></script>

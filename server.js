@@ -4,7 +4,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var cozydb = require('cozydb');
-
+var path = require('path');
+global.appRoot = path.resolve(__dirname);
 
 /*
     Configuration section.
@@ -34,6 +35,9 @@ app.use(activityController);
 var verbController = require('./server/controllers/verb');
 app.use(verbController);
 
+var verbController = require('./server/controllers/public');
+app.use(verbController);
+
 
 /*
     CouchDB views initialization. It must be done before starting the server.
@@ -48,4 +52,6 @@ cozydb.configure(__dirname, null, function() {
 
       console.log('Cozy Learning Record Store app listening at http://%s:%s', host, port);
     });
+
+    module.exports = server ;
 });

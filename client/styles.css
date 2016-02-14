@@ -35,7 +35,7 @@ body {
 
 body {
     text-rendering:   optimizeLegibility;
-    background-color: #fff;
+    background-color: #e6ecff;
 }
 
 h1 {
@@ -103,7 +103,7 @@ button:active {
     margin: 0;
     margin-right: 40px;
     border-right: 1px solid #f2f2f2;
-    background: #f2f2f2;
+    background: #e6ecff;
     min-width: 10%;
 }
 
@@ -113,7 +113,16 @@ button:active {
 }
 
 [role="navigation"] li[aria-selected="true"] {
-    background: #ffffff;
+    background: #e6ecff;
+}
+
+[role="navigation"] li[principal-entity="true"] {
+    background: #6666ff ;
+    border-style: ridge;
+}
+
+[role="navigation"] li[principal-entity="false"] {
+    background: #9999ff ;
 }
 
 [role="navigation"] li:hover {

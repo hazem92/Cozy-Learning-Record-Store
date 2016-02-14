@@ -130,12 +130,12 @@ function deleteDebtHandler() {
 }
 
 
-function listDebtHandler() {
+function listStatementHandler() {
 
-    var $result = $('#crud-list .result');
+    var $result = $('#crud-list-statements .result');
     var $resultStatus = $result.find(' p.status span');
     var $resultBody = $result.find('pre');
-    var $button = $('#crud-list button');
+    var $button = $('#crud-list-statements button');
 
     function onSubmit() {
 
@@ -162,10 +162,109 @@ function listDebtHandler() {
     $button.click(onSubmit);
 }
 
+function listActivitiesHandler() {
+
+    var $result = $('#crud-list-activities .result');
+    var $resultStatus = $result.find(' p.status span');
+    var $resultBody = $result.find('pre');
+    var $button = $('#crud-list-activities button');
+
+    function onSubmit() {
+
+        $result.removeClass('error').removeClass('success');
+
+        $.ajax({
+            'method': 'GET',
+            'url': '/activities/',
+            'complete': function(xhr, textStatus) {
+                $resultStatus.html(xhr.status);
+
+                if (xhr.status !== 200) {
+                    $result.addClass('error');
+                    $resultBody.html(xhr.responseText);
+                } else {
+                    $result.addClass('success');
+                    var formatted = JSON.stringify(xhr.responseJSON, null, 2);
+                    $resultBody.html(formatted);
+                }
+            }
+        });
+    }
+
+    $button.click(onSubmit);
+}
+
+function listActorsHandler() {
+
+    var $result = $('#crud-list-actors .result');
+    var $resultStatus = $result.find(' p.status span');
+    var $resultBody = $result.find('pre');
+    var $button = $('#crud-list-actors button');
+
+    function onSubmit() {
+
+        $result.removeClass('error').removeClass('success');
+
+        $.ajax({
+            'method': 'GET',
+            'url': '/actors/',
+            'complete': function(xhr, textStatus) {
+                $resultStatus.html(xhr.status);
+
+                if (xhr.status !== 200) {
+                    $result.addClass('error');
+                    $resultBody.html(xhr.responseText);
+                } else {
+                    $result.addClass('success');
+                    var formatted = JSON.stringify(xhr.responseJSON, null, 2);
+                    $resultBody.html(formatted);
+                }
+            }
+        });
+    }
+
+    $button.click(onSubmit);
+}
+
+function listVerbsHandler() {
+
+    var $result = $('#crud-list-verbs .result');
+    var $resultStatus = $result.find(' p.status span');
+    var $resultBody = $result.find('pre');
+    var $button = $('#crud-list-verbs button');
+
+    function onSubmit() {
+
+        $result.removeClass('error').removeClass('success');
+
+        $.ajax({
+            'method': 'GET',
+            'url': '/verbs/',
+            'complete': function(xhr, textStatus) {
+                $resultStatus.html(xhr.status);
+
+                if (xhr.status !== 200) {
+                    $result.addClass('error');
+                    $resultBody.html(xhr.responseText);
+                } else {
+                    $result.addClass('success');
+                    var formatted = JSON.stringify(xhr.responseJSON, null, 2);
+                    $resultBody.html(formatted);
+                }
+            }
+        });
+    }
+
+    $button.click(onSubmit);
+}
+
 
 window.onload = function() {
     routerHandler();
     fetchDebtHandler();
     deleteDebtHandler();
-    listDebtHandler();
+    listStatementHandler();
+    listActivitiesHandler();
+    listActorsHandler();
+    listVerbsHandler();
 };
