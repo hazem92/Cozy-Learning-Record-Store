@@ -7,7 +7,21 @@ router.get('/public', function(req, res, next) {
 });
 
 router.get('/public/verbs', function(req, res, next) {
-    res.redirect("/verbs");
+
+  var request = require("request");
+  var EventEmitter = require("events").EventEmitter;
+  var body = new EventEmitter();
+
+
+  request("/verbs", function(error, response, data) {
+      body.data = data;
+      body.emit('update');
+  });
+
+  body.on('update', function () {
+    res.status(200).send(body.data); 
+  });
+
 });
 
 module.exports = router;
