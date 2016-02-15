@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var verbController = require('./verb');
+router.use(verbController);
 
 // Hello world public !
 router.get('/public', function(req, res, next) {
