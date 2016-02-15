@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var cozydb = require('cozydb');
 var path = require('path');
-global.appRoot = path.resolve(__dirname);
+//global.appRoot = path.resolve(__dirname);
 
 /*
     Configuration section.
@@ -38,6 +38,9 @@ app.use(verbController);
 var verbController = require('./server/controllers/public');
 app.use(verbController);
 
+//export server for test
+var EventEmitter = require("events").EventEmitter;
+var body = new EventEmitter();
 
 /*
     CouchDB views initialization. It must be done before starting the server.
@@ -50,8 +53,19 @@ cozydb.configure(__dirname, null, function() {
       var host = server.address().address;
       var port = server.address().port;
 
+      //export server for test
+      body.data = server;
+      body.emit('update');
+
       console.log('Cozy Learning Record Store app listening at http://%s:%s', host, port);
     });
-
-    module.exports = server ;
 });
+
+//export server for test
+body.on('update', function () {
+    var server = body.data ;
+    console.log("call update");
+    module.exports = server ;
+    console.log(server);
+
+  });

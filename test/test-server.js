@@ -1,6 +1,6 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../server');
+var server = require('../server.js');
 var should = chai.should();
 
 chai.use(chaiHttp);
@@ -24,9 +24,10 @@ it('should delete a SINGLE blob on /blob/<id> DELETE');
 });
 */
 
+//     TypeError: Cannot read property 'address' of undefined
 describe('verbs', function(){
   it('should respond to GET',function(done){
-    chai.request(server)
+    chai.request(server.address)
       .get('/verbs')
       .end(function(res){
         expect(res.status).to.equal(200);
