@@ -35,8 +35,8 @@ app.use(activityController);
 var verbController = require('./server/controllers/verb');
 app.use(verbController);
 
-var verbController = require('./server/controllers/public');
-app.use(verbController);
+var publicController = require('./server/controllers/public');
+app.use(publicController);
 
 //export server for test
 var EventEmitter = require("events").EventEmitter;
