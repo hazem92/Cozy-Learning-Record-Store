@@ -13,7 +13,7 @@ exports.loginForm = function(req, res) {
   res.render('login');
 };
 
-exports.login = passport.authenticate('local', { successReturnToOrRedirect: '/public', failureRedirect: '/public/login' });
+exports.login = passport.authenticate('local', { successReturnToOrRedirect: '/public/account', failureRedirect: '/public/login' });
 
 exports.logout = function(req, res) {
   req.logout();
