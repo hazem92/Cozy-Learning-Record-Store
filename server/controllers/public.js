@@ -8,10 +8,6 @@ var user = require ('../user');
 var verbController = require('./verb');
 router.use(verbController);
 
-// Hello world public !
-router.get('/public', function(req, res, next) {
-    res.status(200).send('Hello, We are building a nice Learning Record Store in your cozy world');
-});
 
 router.get('/public/verbs', function(req, res, next) {
 
