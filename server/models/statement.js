@@ -23,6 +23,11 @@ var Statement = cozydb.getModel('Statement', {
 	"object": {
 		default: null,
 		type: Object
+	},
+
+	"timestamp": {
+		default: null,
+		type: Date
 	}
 
 /*

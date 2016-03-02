@@ -207,8 +207,8 @@ function createObject(req, res, next, objectType, data, callback) {
 }
 
 function createStatement(req, res, next) {
-
-  Statement.create({"actor": actor_object, "verb": verb_object, "object": object_object}, function(err, statement) {
+  var timestamp = Date.now();
+  Statement.create({"actor": actor_object, "verb": verb_object, "object": object_object, "timestamp": timestamp}, function(err, statement) {
     if(err) {
 
       next(err);
