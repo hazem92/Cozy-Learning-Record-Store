@@ -20,10 +20,10 @@ var Statement = cozydb.getModel('Statement', {
 // we are going at this stage to reduce the object attribute to Activity definition since its definition in the spec is a bit ambiguous
 //	object: Object,		//Activity,Agent ..
 
-  "activity":   {
-        default: null,
-        type: Object
-    },	    		//Activity done
+	"object": {
+		default: null,
+		type: Object
+	}
 
 /*
 	result: Object,			//Further details about the specified verb

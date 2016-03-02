@@ -4,24 +4,58 @@ var Statement = require('../models/statement');
 var Actor = require('../models/actor');
 var Activity = require('../models/activity');
 var Verb = require('../models/verb');
+var Objet = require('../models/object');
 
 var actor_object;
-var activity_object;
 var verb_object;
+var activity_object;
+var actor_object_2;
+var object_object;
 
 // Create a new statement
 router.post('/statements', function(req, res, next) {
+  console.log(req.body);
   var actor_name = req.body.actor.name;
-  var activity_name = req.body.activity.name;
   var verb_display = req.body.verb.display;
+  var objectType = req.body.object.objectType;
 
-  findOrCreateActor(req, res, next, actor_name, function(req, res, next) {
-    findOrCreateActivity(req, res, next, activity_name, function (req, res, next) {
-      findOrCreateVerb(req, res, next, verb_display, function (req, res, next) {
-        createStatement(req, res, next);
+  if (objectType == "actor") {
+    var actor_name_object = req.body.object.data.name
+    console.log("------------------------");
+    console.log(actor_name_object);
+    findOrCreateActor(req, res, next, actor_name, function(req, res, next) {
+      console.log("------------------------");
+      console.log(actor_object);
+      findOrCreateObjectActor(req, res, next, actor_name_object, function (req, res, next) {
+        console.log("------------------------");
+        console.log(actor_object_2);
+        createObject(req, res, next, objectType, actor_object_2, function (req, res, next) {
+          console.log("------------------------");
+          console.log(object_object);
+          findOrCreateVerb(req, res, next, verb_display, function (req, res, next) {
+            console.log("------------------------");
+            console.log(verb_object);
+            createStatement(req, res, next);
+          });
+        });
       });
     });
-  });
+  } else if (objectType == "activity") {
+    var activity_name = req.body.object.data.name;
+    console.log(activity_name);
+    findOrCreateActor(req, res, next, actor_name, function(req, res, next) {
+      findOrCreateActivity(req, res, next, activity_name, function (req, res, next) {
+        createObject(req, res, next, objectType, activity_object, function (req, res, next) {
+          findOrCreateVerb(req, res, next, verb_display, function (req, res, next) {
+            createStatement(req, res, next);
+          });
+        })
+      });
+    });
+  } else {
+    res.status(400).send('Object type invalid');
+  }
+
 });
 
 function findOrCreateActor(req, res, next, actor_name, callback) {
@@ -56,6 +90,44 @@ function findOrCreateActor(req, res, next, actor_name, callback) {
   }
 }
 
+function findOrCreateObjectActor(req, res, next, actor_name, callback) {
+  console.log("------------------------");
+  console.log(actor_name);
+  if(actor_name) {
+    var options =  {
+      key: actor_name
+    };
+    Actor.request('byName', options, function(err, actor){
+
+      if(err) {
+
+        next(err);
+      } else if(!actor || actor.length == 0) {
+
+        Actor.create(req.body.object.data, function(err, actor) {
+          if(err) {
+
+            next(err);
+          } else {
+                console.log("-----------actor object 1-------------");
+                console.log(actor);
+            actor_object_2 = actor;
+            callback(req, res, next);
+          }
+        });
+      } else {
+        console.log("-----------actor object 2-------------");
+        console.log(actor[0]);
+        actor_object_2 = actor[0];
+        callback(req, res, next);
+      }
+    });
+  } else {
+    res.status(400).send('Actor name cannot be empty');
+  }
+}
+
+
 function findOrCreateActivity(req, res, next, activity_name, callback) {
 
   if(activity_name) {
@@ -68,7 +140,7 @@ function findOrCreateActivity(req, res, next, activity_name, callback) {
         next(err);
       } else if(!activity || activity.length == 0) {
 
-        Activity.create(req.body.activity, function(err, activity) {
+        Activity.create(req.body.object.data, function(err, activity) {
           if(err) {
 
             next(err);
@@ -118,9 +190,25 @@ function findOrCreateVerb(req, res, next, verb_display, callback) {
   }
 }
 
+function createObject(req, res, next, objectType, data, callback) {
+  console.log("-----------create object-------------");
+  console.log(data);
+  console.log(objectType);
+  Objet.create({"objectType": objectType, "data": data}, function(err, object) {
+    if(err) {
+      console.log(err);
+      next(err);
+    } else {
+      console.log(object);
+      object_object = object;
+      callback(req, res, next);
+    }
+  });
+}
+
 function createStatement(req, res, next) {
 
-  Statement.create({"actor": actor_object, "verb": verb_object, "activity": activity_object}, function(err, statement) {
+  Statement.create({"actor": actor_object, "verb": verb_object, "object": object_object}, function(err, statement) {
     if(err) {
 
       next(err);
