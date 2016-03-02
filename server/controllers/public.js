@@ -15,8 +15,12 @@ router.get('/public/verbs', function(req, res, next) {
   var EventEmitter = require("events").EventEmitter;
   var body = new EventEmitter();
 
+  var hostname = req.headers.host;
+  console.log(hostname);
+  var fullurl = "http://" + hostname + "/verbs";
+
 /* Need to find a solution for this*/
-  request("/verbs", function(error, response, data) {
+  request(fullurl, function(error, response, data) {
       body.data = data;
       body.emit('update'); console.log(data) ;
   });
