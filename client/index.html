@@ -7,28 +7,55 @@
     <body role="application">
         <ul role="navigation">
             <li aria-selected="true" principal-entity="true"><a href="#welcome"> Welcome </a></li>
-            <li aria-selected="true" principal-entity="false"><a href="#welcome-developers"> Developers </a></li>
-            <li aria-selected="false" principal-entity="true"><a href="#welcome-statements"> Statements </a></li>
+          <!--  <li aria-selected="true" principal-entity="false"><a href="#welcome-developers"> Developers </a></li> -->
+            <li aria-selected="false" principal-entity="true"><a href=""> Statements </a></li>
             <li aria-selected="false" principal-entity="false" ><a href="#crud-list-statements" >List of Statements</a></li>
             <li aria-selected="false" principal-entity="false"><a href="#crud-fetch">Fetch an existing Statement</a></li>
             <li aria-selected="false" principal-entity="false"><a href="#crud-delete">Delete an existing Statement</a></li>
-            <li aria-selected="false" principal-entity="true"><a href="#welcome-activities"> Activities </a></li>
+            <li aria-selected="false" principal-entity="true"><a href=""> Activities </a></li>
             <li aria-selected="false" principal-entity="false" ><a href="#crud-list-activities">List of Activities</a></li>
-            <li aria-selected="false" principal-entity="true"><a href="#welcome-actors"> Actors </a></li>
+            <li aria-selected="false" principal-entity="true"><a href=""> Actors </a></li>
             <li aria-selected="false" principal-entity="false" ><a href="#crud-list-actors">List of Actors</a></li>
-            <li aria-selected="false" principal-entity="true"><a href="#welcome-verbs"> Verbs </a></li>
+            <li aria-selected="false" principal-entity="true"><a href=""> Verbs </a></li>
             <li aria-selected="false" principal-entity="false" ><a href="#crud-list-verbs">List of Verbs</a></li>
         </ul>
 
         <div role="main">
 
           <div role="panel" id="welcome">
-              <h2>Welcome To Cozy Learning Record Store Application Interface <br>
-                Here you can find : all Statements, Activities, Actors and Verbs
-                in the LRS
+              <h2>Welcome To Cozy Learning Record Store Application User Interface <br>
               </h2>
-              <p> How to use this application :
-              WIP</p>
+              <p>
+                We are creating a Learning Record Store
+                for Tin Can (xAPI) as a cozy application in a special personal cloud called Cozy cloud.<br>
+                This project will allow Tin can users to protect more their data and introduce the power of cozy cloud to eLearning world.
+              </p>   <h3>
+                This application accomplishes three main tasks :
+                </h3> <p>
+                	1- The first and most important is its role as learning store record for applications
+                	   using the standard Tin can (xAPI).<br>
+                	   The Learning Record store uses Cozy cloud for the storage of Data (Statements,..).<br>
+                 	   Applications implementing Tin can and willing to use this cozy app as an LRS can be
+                 	   "First-party client" or "Third-party client" <br> towards Cozy cloud.<br> In the second case
+                 	   our cozy application will handle authentication and authorization processes (oauth2).
+                  </p><p>
+                	2- Our application gives the opportunity to the owner of Cozy cloud to get a review on
+                	   the Data stored in the cloud <br> and execute some operations easily via our user interface.
+                	   The range of these operations can be easily extended.
+                  </p><p>
+                	3- Since authentication and authorization for "Third-party client" is not supported on
+                	   Cozy cloud, we included <br>an authentication and authorization server to our application
+                	   to allow "Third-party client" applications (towards cozy) <br>and implementing Tin can to
+                	   use our cozy application as a Learning Record Store.
+                  </p> <p>
+                    This is a project for third-year students of Telecom Bretagne.<br><br>
+                    Hazem AMARA<br>
+                    Zelong Chen
+                  </p>
+                  <p>
+                    Github link for the project : <a href="https://github.com/hazem92/Cozy-Learning-Record-Store">https://github.com/hazem92/Cozy-Learning-Record-Store</a>
+                  </p>
+
           </div>
           <div role="panel" id="welcome-developers">
               <h2> This was proudly brought to you by
