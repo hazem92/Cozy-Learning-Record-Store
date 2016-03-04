@@ -1,0 +1,2 @@
+POST http://localhost:9250/public/login?username=bob&password=secret
+GET http://localhost:9250/public/dialog/authorize?response_type=code&client_id=abc123
