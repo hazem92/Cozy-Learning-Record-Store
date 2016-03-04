@@ -127,6 +127,21 @@ router.delete('/verbs/:id', function(req, res, next) {
 
 });
 
+// Remove all existing verbs
+router.delete('/verbs', function(req, res, next) {
+
+  Verb.requestDestroy('all', function(err) {
+    if(err) {
+
+      next(err);
+    } else {
+
+      res.sendStatus(204);
+    }
+  });
+
+});
+
 /// List of all verb
 router.get('/verbs', function(req, res, next) {
   // Find verbs by display

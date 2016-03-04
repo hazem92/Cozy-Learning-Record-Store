@@ -108,6 +108,21 @@ router.delete('/activities/:id', function(req, res, next) {
 
 });
 
+// Remove all existing activities
+router.delete('/activities', function(req, res, next) {
+
+  Activity.requestDestroy('all', function(err) {
+    if(err) {
+
+      next(err);
+    } else {
+
+      res.sendStatus(204);
+    }
+  });
+
+});
+
 /// List of all Activities
 router.get('/activities', function(req, res, next) {
 
