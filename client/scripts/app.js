@@ -234,12 +234,12 @@ function listVerbsHandler() {
     var $button = $('#crud-list-verbs button');
 
     function onSubmit() {
-
+        console.log( location.host );
         $result.removeClass('error').removeClass('success');
 
         $.ajax({
             'method': 'GET',
-            'url': '/verbs/',
+            'url': 'http://'+location.host+'/apps/cozy-learning-record-store/verbs/',
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
