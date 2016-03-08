@@ -55,7 +55,7 @@ function fetchDebtHandler() {
 
         $.ajax({
             'method': 'GET',
-            'url': 'http://'+location.host+'/apps/cozy-learning-record-store/statements/' + id,
+            'url': 'https://'+location.host+'/apps/cozy-learning-record-store/statements/' + id,
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
@@ -106,7 +106,7 @@ function deleteDebtHandler() {
 
         $.ajax({
             'method': 'DELETE',
-            'url': 'http://'+location.host+'/apps/cozy-learning-record-store/statements/' + id,
+            'url': 'https://'+location.host+'/apps/cozy-learning-record-store/statements/' + id,
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
@@ -143,7 +143,7 @@ function listStatementHandler() {
 
         $.ajax({
             'method': 'GET',
-            'url': 'http://'+location.host+'/apps/cozy-learning-record-store/statements/',
+            'url': 'https://'+location.host+'/apps/cozy-learning-record-store/statements/',
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
@@ -175,7 +175,7 @@ function listActivitiesHandler() {
 
         $.ajax({
             'method': 'GET',
-            'url': 'http://'+location.host+'/apps/cozy-learning-record-store/activities/',
+            'url': 'https://'+location.host+'/apps/cozy-learning-record-store/activities/',
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
@@ -207,7 +207,7 @@ function listActorsHandler() {
 
         $.ajax({
             'method': 'GET',
-            'url': 'http://'+location.host+'/apps/cozy-learning-record-store/actors/',
+            'url': 'https://'+location.host+'/apps/cozy-learning-record-store/actors/',
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
