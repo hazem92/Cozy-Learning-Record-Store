@@ -1,9 +1,9 @@
 {
   "name": "Cozy_Learning_Record_Store",
-  "icon-path": "client/icons/icon_lrs.svg",
-  "cozy-displayName": "Cozy LRS",
+  "displayName": "Cozy LRS",
   "version": "0.1.0",
   "description": "Cozy application to implement a Learning Record Store for Tin Can (xAPI) in Cozy Cloud ",
+  "icon-path": "client/icons/icon_lrs.svg",
   "main": "server.js",
   "dependencies": {
     "body-parser": "1.14.2",
