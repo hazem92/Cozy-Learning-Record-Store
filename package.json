@@ -1,5 +1,6 @@
 {
   "name": "Cozy_Learning_Record_Store",
+  "icon-path": "client/icon_lrs.svg",
   "version": "0.1.0",
   "description": "Cozy application to implement a Learning Record Store for Tin Can (xAPI) in Cozy Cloud ",
   "main": "server.js",
@@ -19,6 +20,12 @@
     "start": "node server.js",
     "dev": "node_modules/.bin/nodemon server.js --ignore client/"
   },
+  "licenses": [
+    {
+      "type": "AGPL v3.0",
+      "url": "http://www.gnu.org/licenses/agpl-3.0.html"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/hazem92/Coz_Learning_Record_Store"
@@ -28,16 +35,16 @@
       "description": "Informations about verbs"
     },
     "Statement" : {
-      "description": "Informations about verbs"
+      "description": "Informations about statements"
     },
     "Actor" : {
-      "description": "Informations about verbs"
+      "description": "Informations about actors"
     },
     "Activity" : {
-      "description": "Informations about verbs"
+      "description": "Informations about activities"
     },
     "Object" : {
-      "description": "Informations about verbs"
+      "description": "Informations about objects"
     }
   },
   "keywords": [
