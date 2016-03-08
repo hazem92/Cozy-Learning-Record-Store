@@ -1,5 +1,5 @@
 {
-  "name": "Cozy_Learning_Record_Store",
+  "name": "Cozy_LRS",
   "displayName": "Cozy LRS",
   "version": "0.1.0",
   "description": "Cozy application to implement a Learning Record Store for Tin Can (xAPI) in Cozy Cloud ",
