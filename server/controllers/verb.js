@@ -180,12 +180,13 @@ router.get('/verbs', function(req, res, next) {
         //  If an unexpected error occurs, forward it to Express error
         //  middleware which will send the error properly formatted.
 
+        console.log(" ********* erreur verbs");
         next(err);
       } else {
 
         //  If everything went well, send an empty response with the correct
         //  HTTP status.
-
+        console.log(verbs);
         res.status(200).json(verbs);
       }
     });
