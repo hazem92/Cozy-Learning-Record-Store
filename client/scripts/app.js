@@ -239,8 +239,7 @@ function listVerbsHandler() {
 
         $.ajax({
             'method': 'GET',
-            //'url': 'https://'+location.host+'/apps/cozy-learning-record-store/verbs/',
-            'url': '/verbs',
+            'url': 'https://'+location.host+'/apps/cozy-learning-record-store/verbs/',
             'complete': function(xhr, textStatus) {
                 $resultStatus.html(xhr.status);
 
