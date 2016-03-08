@@ -189,7 +189,8 @@ router.get('/verbs', function(req, res, next) {
         //  If everything went well, send an empty response with the correct
         //  HTTP status.
         console.log(verbs);
-        res.status(200).json(verbs);
+        //res.status(200).json(verbs);
+        callback(201, verbs) ;
       }
     });
   }
