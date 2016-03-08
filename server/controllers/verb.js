@@ -144,6 +144,7 @@ router.delete('/verbs', function(req, res, next) {
 
 /// List of all verb
 router.get('/verbs', function(req, res, next) {
+  console.log(" ********* get verbs");
   // Find verbs by display
   if(req.query.display) {
     var option = {
