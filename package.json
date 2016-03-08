@@ -26,6 +26,18 @@
   "cozy-permissions": {
     "Verb" : {
       "description": "Informations about verbs"
+    },
+    "Statement" : {
+      "description": "Informations about verbs"
+    },
+    "Actor" : {
+      "description": "Informations about verbs"
+    },
+    "Activity" : {
+      "description": "Informations about verbs"
+    },
+    "Object" : {
+      "description": "Informations about verbs"
     }
   },
   "keywords": [
