@@ -33,19 +33,19 @@
   },
   "cozy-permissions": {
     "Verb" : {
-      "description": "Informations about verbs"
+      "description": "creates and edits verbs in the LRS"
     },
     "Statement" : {
-      "description": "Informations about statements"
+      "description": "creates and edits statements in the LRS"
     },
     "Actor" : {
-      "description": "Informations about actors"
+      "description": "creates and edits actors in the LRS"
     },
     "Activity" : {
-      "description": "Informations about activities"
+      "description": "creates and edits activities in the LRS"
     },
     "Object" : {
-      "description": "Informations about objects"
+      "description": "creates and edits objects in the LRS"
     }
   },
   "keywords": [
@@ -58,7 +58,6 @@
     "XAPI"
   ],
   "author": "Br01",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hazem92/Coz_Learning_Record_Store/issues"
   },
