@@ -1,3 +1,5 @@
+# Cozy-Learning-Record-Store 
+
 A project for third-year students of Telecom Bretagne. We are creating a Learning Record Store
 for Tin Can (xAPI) as a cozy application in a special personal cloud called Cozy cloud.
 This project will allow Tin can users to protect more their data and introduce the power of cozy cloud to eLearning world.
@@ -22,8 +24,12 @@ This application accomplishes three main tasks :
 
 
 Find more about:
+
 	Cozy cloud: https://cozy.io/fr/
+	
 	Tin can: http://tincanapi.com/
 	
 	
+## License
 	
+See the [LICENSE](LICENSE.md) file for license rights and limitations (AGPL).
