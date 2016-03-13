@@ -25,10 +25,11 @@ This application accomplishes three main tasks :
 
 Find more about:
 
-	Cozy cloud: https://cozy.io/fr/
-	
-	Tin can: http://tincanapi.com/
-	
+Cozy cloud: [https://cozy.io/fr/](https://cozy.io/fr/)
+
+Tin can: [http://tincanapi.com/](http://tincanapi.com/)
+
+TinCan API Collecter: [https://github.com/ZelongChen/TinCan-API-Collector](https://github.com/ZelongChen/TinCan-API-Collector)
 	
 ## License
 	
